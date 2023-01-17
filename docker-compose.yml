@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+
+########################################
+##### SQL Server - MySQLDB         #####
+########################################
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'changeRootPassword'
+      MYSQL_DATABASE: 'changeDatabaseName'
+      MYSQL_USER: 'changeUsername'
+      MYSQL_PASSWORD: 'changeUserPassword'
+      TZ: 'Asia/Kolkata'
+    volumes:
+      - ./volumes/db/mysql:/var/lib/mysql
+    networks:
+      - private
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - private
+
+
+networks:
+  private:
+    driver: bridge
